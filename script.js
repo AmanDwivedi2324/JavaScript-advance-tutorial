@@ -674,63 +674,323 @@ setTimeout(function(){
 
 */
 
+/*
+
+--> Callbacks => A callback is a function passed as an argument to another function.
+
+Example =>
+
+
+function sum(a,b){
+    console.log(`sum is ${a+b}`);
+}
+
+function calculator(a,b,sum){
+    sum(a,b);
+}
+calculator(2,3,sum);
+
+const hello = () => {
+    console.log("Hello");
+};
+setTimeout(hello, 3000);
 
 
 
 
 
+// console.log(2+2 + "is equal to "+  2*2 + "and also equal to " + 4*1);
+// console.log(`${2+2} is equal to ${2*2} and also equal to ${4*1}`);
+
+--> Callback Hell => Nested callbacks stacked below one another forming a pyramid structure (Pyramid of DOOM).
+This style of programming becomes difficult to understand and manage.
+-> If we want to execute one code first then only second instruction then,
+
+
+
+function getData(dataId,getNextData){
+    setTimeout(() => {
+        console.log("data ", dataId);
+        if(getNextData){
+            getNextData();
+        }
+    }, 2000);
+}
+
+getData(1,() => {
+    getData(2,() => {
+        getData(3);
+    })
+})
 
 
 
 
+-->==> To resolve callback hell, we use promises
+
+*/
+
+/*
+
+-->Promises ==> In js, promises are objects that represent the eventual completion (or failure) of an asynchronous operation and its resulting value.
+                They provide a way to handle asynchronous operations more effectively than traditional callback functions, allowing for cleaner and more manageable code.
+
+        States ==> 1) = Pending
+                   2) = Fulfilled (resolve)
+                   3) = Rejected
+
+        Methods ==> 1) = promise.then((res) => {}) (on resolve)
+                    2) = promise.catch((err) => {}) (on reject)
+
+
+
+let promise = new Promise((resolve,reject) => {
+
+})
+
+===> resolve and reject are callbacks appointed by js
+
+
+let promise = new Promise((resolve,reject) => {
+    console.log("I am a promise");
+    resolve("Promise fulfilled");
+    // reject("some error occured");
+})
+
+console.log(promise);
 
 
 
 
+function getData(dataId,getNextData){
+    return new Promise((resolve,reject) => {
+        setTimeout(() => {
+            console.log("data", dataId);
+            resolve("success");
+            if(getNextData){
+                getNextData();
+            }
+        }, 5000);
+    });
+}
+
+
+
+const getPromise = () => {
+        return new Promise((resolve,reject) => {
+        console.log("I am a promise");
+        resolve("resolved");
+        // reject("rejected");
+    });
+    
+}
+
+let promise = getPromise();
+promise.then((res) => {                     //res is automatic parameter of then in this scenario, res contains resolved
+    console.log("Promise fulfilled",res);
+});
+promise.catch((err)=>{                    //err is automatic parameter of catch in this scenario, err contains rejected
+    console.log("some error occured",err);
+})
+
+*/
+
+/*
+
+--> Promise chain => 
+
+
+
+function asyncFunc1(){
+    return new Promise((resolve,reject) => {
+        setTimeout(() => {
+            console.log(" data1");
+            resolve("success");
+        }, 4000);
+    })
+}
+
+function asyncFunc2(){
+    return new Promise((resolve,reject) => {
+        setTimeout(() => {
+            console.log(" data2");
+            resolve("success");
+        }, 4000);
+    })
+}
+
+
+//Promise chaining
+
+// console.log("Fetching data1");
+// let p1 = asyncFunc1();
+// p1.then((res) => {
+//     // console.log(res);
+//     console.log("Fetching data2");
+//     let p2 = asyncFunc2();
+//     p2.then((res) => {
+//         // console.log(res)
+//     })
+// });
+
+console.log("Fetching data1 in simpler way");
+asyncFunc1().then((res) => {
+    console.log("Fetching data2 in simpler way");
+     asyncFunc2().then((res)=>{
+
+    })
+})
 
 
 
 
+// callback hell 
+
+// function getData(dataId,getNextData){
+//     setTimeout(() => {
+//         console.log("data ", dataId);
+//         if(getNextData){
+//             getNextData();
+//         }
+//     }, 2000);
+// }
+
+// getData(1,() => {
+//     getData(2,() => {
+//         getData(3);
+//     })
+// })
+
+
+// promise chaining 
+
+function getData(dataId){
+    return new Promise((resolve,reject) => {
+        setTimeout(() => {
+            console.log("data", dataId);
+            resolve("success");
+        }, 5000);
+    });
+}
+
+getData(1).then((res) => {
+     getData(2).then((res)=>{
+         getData(3).then((res) => {
+            
+        })
+        
+    })
+})
 
 
 
 
+// Actual promise chaining
+
+function getData(dataId){
+    return new Promise((resolve,reject) => {
+        setTimeout(() => {
+            console.log("data", dataId);
+            resolve("success");
+        }, 5000);
+    });
+}
+
+getData(1).then((res)=>{
+    return getData(2);
+}).then((res)=>{
+    return getData(3);
+}).then((res)=>{
+
+});
+
+*/
+
+/*
+
+--> Async-Await ==> async function always returns a promise.
+                    async function myFunc(){...}
+
+====> await pauses the execution of its surrounding async function until the promise is settled
+      await can be used only within async function
+
+Example ==>
+
+
+function api(){
+    return new Promise((resolve,reject) => {
+        setTimeout(() => {
+            console.log("weather information");
+            resolve(200);               //200 means successful api call
+        }, 2000);
+    });
+}
+
+async function getWeatherInformation(){
+    await api();
+       await api();
+}
 
 
 
+function getData(dataId){
+    return new Promise((resolve,reject) => {
+        setTimeout(() => {
+            console.log("data", dataId);
+            resolve("success");
+        }, 1000);
+    });
+}
+
+async function getAllData(){
+    await getData(1);
+    await getData(2);
+    await getData(3);
+}
+
+getAllData();
+
+*/
+
+/*
+
+--> IIFE (Immediately Invoked Function Expression) ==> It is a function that is called Immediately as soon as it is defined
 
 
 
+        (async function (){
+
+             //body
+
+        })();
 
 
+Example ==>
 
+  
+ 
+function getData(dataId){
+    return new Promise((resolve,reject) => {
+        setTimeout(() => {
+            console.log("data", dataId);
+            resolve("success");
+        }, 1000);
+    });
+}
 
+ (async function (){
+    await getData(1);
+    await getData(2);
+    await getData(3);
 
+})();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+*/
 
 
 
 /*
+
 
 --> concurrency => Concurrency in js refers to the ability to manage multiple tasks at the same time , even though js itself is single-threaded. This means that while   js can only execute one piece of code at a time, it can handle multiple tasks by using async programming techniques.
 
