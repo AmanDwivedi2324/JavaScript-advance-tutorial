@@ -988,7 +988,6 @@ function getData(dataId){
 */
 
 
-
 /*
 
 
@@ -1005,5 +1004,47 @@ function getData(dataId){
 /*
 
 --> Throttling => Throttling in js is a technique used to limit the number of times a function can be executed over a certain period.
+
+*/
+
+/*
+
+--> Fetch API ==> The fetch api provides an interface for fetching (sending/receiving) resources.
+                  It uses request and response objects.
+                  The fetch() method is used to fetch a resource (data).
+                  API stands for Application Programming Interface
+
+
+                  let promise = fetch(url,[options])               //options are optional
+
+                  In past , we use AJAX for data fetching (Aysnchronous JS and XML)
+                  Now, we use JSON (JavaScript object notation)
+                  json() => Returns a second promise that resolves with the result of parsing the response body text as JSON (input is json, output is JS object)
+
+
+
+
+
+const URL = "https://cat-fact.herokuapp.com/facts/random";
+let fact = document.querySelector("#fetch-example");
+let getAFact = document.querySelector("#fact");
+
+
+
+
+const getFacts = async () => {
+    let response =await fetch(URL);          
+     console.log(response);                       //in json format
+
+    //for converting json format into readable format we use json() method, it is also an asynchronous method
+
+    let data = await response.json();
+    // console.log(data.text);
+    fact.innerText = data.text;
+}
+
+getAFact.addEventListener("click",getFacts);
+
+// getFacts();
 
 */
