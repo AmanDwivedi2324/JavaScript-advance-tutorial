@@ -1102,4 +1102,5 @@ getAFact.addEventListener("click",getFacts);
 
 // getFacts();
 
+
 */
