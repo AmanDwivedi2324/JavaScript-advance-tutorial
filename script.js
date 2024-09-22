@@ -53,7 +53,7 @@ function sayHello(){                          //function definition
     console.log("What's going on..")
 }
 
-sayHello();                                   // function call
+sayHello();                                   // function call or function invocation
 */
 
 
@@ -61,6 +61,10 @@ sayHello();                                   // function call
 -> Arrays => Arrays are used to store multiple values at a time in a single variable 
                 var a = [12,13,114,15];
                 console.log(a);
+
+                var b = [1,"anan"];           //this will not give error but this is not a good practice , store same type of elements
+                console.log(b);
+
 */
 
 /*
@@ -170,14 +174,14 @@ Execution context -> When a function call, then it makes its imaginary container
 
 
 // example =>
-    function abcd(){             //fucntion definition
+    function abcd(){             //function definition
         var a = 5;
         function def(){
             var b = 7;
         }
     }
-
-    abcd();                        //function call
+  
+    abcd();                        //function call or function invocation
 
 ==> The above example contains variable a, function def and lexical environment in its execution context
 
@@ -185,7 +189,7 @@ Execution context -> When a function call, then it makes its imaginary container
 */
 
 /*
--> How to copy reference values => 
+-> How to copy reference values => using spread operator (...)
     
     var a = [1,2,3,4,5,6];
     var b = a;               //direct copy  
@@ -226,8 +230,8 @@ console.log(obj2Copy);         //{name: 'Nikhil', age: 23}
 
 /*
 -> Truthy vs falsy ==> In js, values can be categorized as truthy or falsy, which determines how they are evaluated in conditional statements, loops, and other boolean contexts. 
-        -> falsy => falsy are those values that evaluate to false. 
-                -> false
+        -> falsy => falsy are those values that evaluate to false.  (false,0,null,undefined,NaN,document.all,0n,-0,)
+                -> false  
                 -> null 
                 -> undefined 
                 -> NaN 
@@ -259,13 +263,17 @@ else{
 */
 
 /*
--> forEach => Used to iterate or perform some operations on each element of Array. 
-
+-> forEach => Used to iterate or perform some operations on each element of Array.    
 Example => 
 
 var a = [1,2,3,4,5,6];
 a.forEach(function(val){
     console.log(val);              //iterate over array elemens one by one
+})
+
+var b = [2,3,4,5,6];
+b.forEach((val)=>{
+    console.log(val*2);
 })
 
 */
@@ -290,6 +298,23 @@ for(var val in obj){
      //21
 }
 
+var aman = {
+    name : "aman",
+    age : 21,
+    status : "single"
+};
+
+for(var key in aman){
+    console.log(key);
+}
+for(var val in aman){
+    console.log(aman[val]);
+}
+
+for(var val in aman){
+    console.log(val + " = " + aman[val]);
+}
+
 */
 
 /*
@@ -300,6 +325,9 @@ for(var val in obj){
 /*
 
 -> first class function => In js, a first class fucntion refers to the treatment of fucntions as first class citizens. This means that functions in js can be treated like any other value.
+
+(assigned to a variable, pass as an argument, return from a function, stored in data structures, anonymous functions)
+
          -> Characteristics =>
                             ->1) Assigned to variables 
         
@@ -354,7 +382,7 @@ for(var val in obj){
 
 /*
 
--> How to check whether designed array is array or not => 
+-> How to check whether designed array is array or not => Array.isArray();   
         using isArray();
 
         example ==>
@@ -370,16 +398,27 @@ var arr = [1,2,3,4,5,6];
 console.log(Array.isArray(arr));                 //true
 console.log(Array.isArray(obj));             //false
 
+
+var a = [1,2,3,45];
+
+var objName = {
+    name : "aman",
+    age : 21,
+    status : "single"
+};
+
+console.log(typeof a);             //object
+console.log(typeof objName);          //object
+
 */
+
 
 /*
 
--> How to delete property from object ==>
+-> How to delete property from object ==>   (delete objName.name)
     using delete 
 
 example ==> 
-
-
 
 var obj = {
     name : "aman",
@@ -535,6 +574,7 @@ Example =>
 
 -> 'this' keyword => The 'this' keyword is a special identifier that refers to the context in which a function is executed. Its value can vary depending on how a function is called . 
             -> 'This' keyword's value id different in different context 
+            (in global scope = window object, in function scope = window object , in method scope = obj, in event scope = jis par event lag raha hai, in constructor function = new created object, in arrow function = obj in which arrow function is defined )
 
 
             ->1) in global scope => 
@@ -617,8 +657,8 @@ console.log(add(2,3));            //5
 console.log(add(2,3));            //5
 
     => Impure functions => 
-        -> May return the same output for the same inputs.
-        -> Have no side effects.
+        -> May or may nor return the same output for the same inputs.
+        -> Have side effects.
 
 example-
       
@@ -645,7 +685,8 @@ example-
     Synchronous js => Tasks are executed one by one (ek ke bad ek)
     Asynchronous js => Asynchronous codes are executed in background without blocking the execution of subsequent code
     
-    If these words are used then there will be async code -
+    If these words are used then there will be async code - (setInterval,setTimeout,promises,fetch,async-await,then-catch,XMLHttpRequest,axios,callbacks)
+
         -setTimeout
         -setInterval
         -promises
@@ -723,12 +764,26 @@ getData(1,() => {
     })
 })
 
+function getData(dataId,getNextData){
+    setTimeout(() => {
+        console.log("data" + dataId);
+        if(getNextData){
+            getNextData();
+        }
+    }, 2000);
+}
 
+getData(1,()=>{
+    getData(2,()=>{
+        getData(3);
+    })
+})
 
 
 -->==> To resolve callback hell, we use promises
 
 */
+
 
 /*
 
